@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-/*
+﻿/*
  * Pokud se budes chtit na neco zeptat a zrovna budu pomahat jinde, zkus se zeptat ChatGPT ;) - https://chat.openai.com/
  * 
  * ZADANI
@@ -21,34 +19,116 @@
  *       - https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/iteration-statements#the-while-statement
  * 3) Umozni uzivateli zadavat i desetinna cisla, tedy prekopej kalkulacku tak, aby umela pracovat s floaty
  */
-Console.WriteLine("first number");
-int a = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine("second number");
-int b = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine("operation(+,-,*,/)");
-string op = Console.ReadLine();
-int result = 0;
 
-if (op == "+")
+internal class Program
 {
-    result = a + b;
+    private static void Main(string[] args)
+    {
+        bool restart = true;
+
+        static double Add(double a, double b)
+        {
+            return a + b;
+        }
+
+        static double Subtract(double a, double b)
+        {
+            return a - b;
+        }
+
+        static double Divide(double a, double b)
+        {
+            return a / b;
+        }
+
+        static double Multiply(double a, double b)
+        {
+            return a * b;
+        }
+
+        while (restart)
+        {
+            double result = 0;
+            double a;
+            double b;
+            try
+            {
+                Console.WriteLine("operation(+,-,*,/,^,√,log,exp)");
+                string op = Console.ReadLine();
+                if (op =="exp")
+                {
+                    Console.WriteLine("first number");
+                    a = Convert.ToDouble(Console.ReadLine());
+                    result = Math.Exp(a);
+                    Console.WriteLine(result);
+                    Console.ReadKey();
+                    restart = false;
+                }
+                else
+                {
+                    Console.WriteLine("first number");
+                    a = Convert.ToDouble(Console.ReadLine());
+                    Console.WriteLine("second number");
+                    b = Convert.ToDouble(Console.ReadLine());
+                    switch (op)
+                    {
+                        case "+":
+                            result = Add(a, b);
+                            break;
+                        case "-":
+                            result = Subtract(a, b);
+                            break;
+                        case "/":
+                            result = Divide(a, b);
+                            break;
+                        case "*":
+                            result = Multiply(a, b);
+                            break;
+                        case "^":
+                            result = Math.Pow(a, b);
+                            break;
+                        case "√":
+                            result = Math.Pow(a, 1 / b);
+                            break;
+                        case "log":
+                            if (b == 2.8)
+                            {
+                                result = Math.Log(a);
+                            }
+                            else
+                            {
+                                result = Math.Log(a, b);
+                            }
+
+                            break;
+                        default:
+                            throw new Exception("invalid operator");
+                    }
+                    Console.WriteLine(result);
+                    Console.ReadKey();
+                    restart = false;
+                }
+                
+                
+                
+
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("invalid input");
+                Console.WriteLine("do you want to try again? y/n");
+                string tryAgain = Console.ReadLine();
+                if (tryAgain.ToLower() != "y")
+                {
+                    restart = false;
+                }
+                Console.ReadKey();
+
+            }
+        }
+    }
 }
-else if (op == "-")
-{
-    result = a - b;
-}
-else if (op == "*")
-{
-    result = a * b;
-}
-else if (op == "/")
-{
-    result = a / b;
-}
-else
-{
-    Console.WriteLine("Invalid operation");
-}
-Console.WriteLine(result);
-Console.ReadKey(); //Toto nech jako posledni radek, aby se program neukoncil ihned, ale cekal na stisk klavesy od uzivatele.
+
+//Toto nech jako posledni radek, aby se program neukoncil ihned, ale cekal na stisk klavesy od uzivatele.
 
