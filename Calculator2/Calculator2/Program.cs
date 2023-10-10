@@ -26,6 +26,7 @@ internal class Program
     {
         bool restart = true;
 
+        //definovani funkci na zakladni operace
         static double Add(double a, double b)
         {
             return a + b;
@@ -46,23 +47,39 @@ internal class Program
             return a * b;
         }
 
+        //pokud je restart True, tak to jde dokola
         while (restart)
         {
-            double result = 0;
+            string result = "";
             double a;
             double b;
+            //try catch statement - pokud je invalid input, tak se pta jestli chce uzivatel zadat neco jineho a podle toho se dal ridi
             try
             {
-                Console.WriteLine("operation(+,-,*,/,^,√,log,exp)");
+                Console.WriteLine("operation(+, -, *, /, ^, √, log, exp, baseConvert)");
                 string op = Console.ReadLine();
+                //pokud je operator exp tak zada jen jedno cislo a, ktere pak jde do funkce Math.Exp() - e^a 
                 if (op =="exp")
                 {
-                    Console.WriteLine("first number");
+                    Console.WriteLine("number");
                     a = Convert.ToDouble(Console.ReadLine());
-                    result = Math.Exp(a);
+                    result = Convert.ToString(Math.Exp(a));
                     Console.WriteLine(result);
                     Console.ReadKey();
                     restart = false;
+                }
+                else if(op == "baseConvert"){
+                    Console.WriteLine("number(cannot be decimal)");
+                    //definice int c, protoze dalsi funkce nepodporuje double
+                    int c = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("choose base to convert to: 2, 8, 10, 16");
+                    int cBase = Convert.ToInt32(Console.ReadLine());
+                    //prevod do soustavy funkci Convert.ToString(Int32, Int32), ktera vezme cislo a prevede ho do dane soustavy
+                    result = Convert.ToString(c, cBase);
+                    Console.WriteLine(result);
+                    Console.ReadKey();
+                    restart = false;
+
                 }
                 else
                 {
@@ -73,39 +90,46 @@ internal class Program
                     switch (op)
                     {
                         case "+":
-                            result = Add(a, b);
+                            result = Convert.ToString(Add(a, b));
                             break;
                         case "-":
-                            result = Subtract(a, b);
+                            result = Convert.ToString(Subtract(a, b));
                             break;
                         case "/":
-                            result = Divide(a, b);
+                            result = Convert.ToString(Divide(a, b));
                             break;
                         case "*":
-                            result = Multiply(a, b);
+                            result = Convert.ToString(Multiply(a, b));
                             break;
                         case "^":
-                            result = Math.Pow(a, b);
+                            //vyuziti built in funkce Math.Pow() k mocneni
+                            result = Convert.ToString(Math.Pow(a, b));
                             break;
                         case "√":
-                            result = Math.Pow(a, 1 / b);
+                            //vyuziti te same funkce jen s 1/b, aby to byla odmocnina
+                            result = Convert.ToString(Math.Pow(a, 1 / b));
                             break;
                         case "log":
+                            //vyuziti Math.Log()
+                            // pokud je b "eulerovo cislo" vrati prirozeny log
                             if (b == 2.8)
                             {
-                                result = Math.Log(a);
+                                result = Convert.ToString(Math.Log(a));
                             }
+                            //pokud je b cokoliv jineho tak vrati log a o zakladu b
                             else
                             {
-                                result = Math.Log(a, b);
+                                result = Convert.ToString(Math.Log(a, b));
                             }
 
                             break;
                         default:
+                            //pokud operator neexistuje, tak hodi error coz ho rovnou dostane do catch casti 
                             throw new Exception("invalid operator");
                     }
                     Console.WriteLine(result);
                     Console.ReadKey();
+                    //ukonci cyklus
                     restart = false;
                 }
                 
@@ -114,11 +138,13 @@ internal class Program
 
                 
             }
+            //pokud se nasktne error, tak to jde sem
             catch (Exception ex)
             {
                 Console.WriteLine("invalid input");
                 Console.WriteLine("do you want to try again? y/n");
                 string tryAgain = Console.ReadLine();
+                //ukonci cyklus pokud neni odpoved y
                 if (tryAgain.ToLower() != "y")
                 {
                     restart = false;
@@ -130,5 +156,5 @@ internal class Program
     }
 }
 
-//Toto nech jako posledni radek, aby se program neukoncil ihned, ale cekal na stisk klavesy od uzivatele.
+
 
