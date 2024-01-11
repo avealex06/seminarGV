@@ -4,6 +4,7 @@
     {
         private static void Main(string[] args)
         {
+            //function to take care of the choices
             static int Choice(Options options)
             {
 
@@ -12,6 +13,7 @@
 
                     try
                     {
+                        //goes through the whole list and prints the correct next line into the console
                         int choice = Convert.ToInt32(Console.ReadLine());
                         for (int i = 1; i <= options.next.Count; i++)
                         {
@@ -40,13 +42,7 @@
 
             }
 
-            static void ListOptions(Options options)
-            {
-                foreach (var option in options.next)
-                {
-                    Console.WriteLine(option.text);
-                }
-            }
+            
 
             
             //ENTERING THE ROOM TEXT
