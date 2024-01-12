@@ -10,21 +10,29 @@
 
                 while (true)
                 {
-
                     try
                     {
                         //goes through the whole list and prints the correct next line into the console
-                        int choice = Convert.ToInt32(Console.ReadLine());
+                        string input = Console.ReadLine();
+                        
+                        if (string.IsNullOrWhiteSpace(input))
+                        {
+                            Console.WriteLine("invalid choice, try again");
+                            continue;
+                        }
+                        int choice = Convert.ToInt32(input);
+                        if (choice > options.next.Count)
+                        {
+                            Console.WriteLine("invalid choice, try again");
+                            continue;
+                        }
                         for (int i = 1; i <= options.next.Count; i++)
                         {
+                            
+
                             if (choice == i)
                             {
-
-                                Console.WriteLine(options.next.ElementAt(i-1).text);
-                                
-
-
-
+                                Console.WriteLine(options.next.ElementAt(i - 1).text);
                                 return choice;
                             }
                         }
@@ -33,13 +41,9 @@
                     catch (Exception ex)
                     {
                         Console.WriteLine("invalid choice, try again");
-
-
                     }
                 }
                 return 0;
-
-
             }
 
             
